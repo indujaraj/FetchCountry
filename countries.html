@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> 
+    <style>
+       body{
+           background-image: url('https://th.bing.com/th/id/OIP.oZ4ETUTdZscnaI5A0IfArAHaE8?w=230&h=180&c=7&r=0&o=5&pid=1.7');
+       }
+            
+           
+    
+       .row1{
+           margin-top: 20%;;
+           margin-left: 30%;
+           height: 100%;
+            width:80%;
+            position:relative;
+            
+        }
+        /* .row2{
+           margin-top: 5%;;
+           margin-left: 30%;
+           border:solid black;
+           height: 50%;
+            width:30%;
+            position:relative;
+            
+        } */
+        #result{
+           
+            
+            width:400px;
+            height:400px;
+        
+            color:black;
+        }
+       
+        #col-6{
+            position: absolute;
+            border:solid black;
+            width:50%;
+            height:50%;
+            border-radius: 100%;
+            margin-top:0%;
+
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row1">
+            <div class="col-6">
+               
+                <form class="d-flex">
+                    <input class="form-control " type="search" placeholder="Enter Country name" id="country_nme" aria-label="Search">
+                    <button class="btn btn-success" type="button" onclick="getData()">Search</button>
+              </form>
+            </div>
+        <div class="row">
+            <div class="col-4" id="result"></div>
+            <div class="col-4"></div>
+            <div class="col-4"></div>
+        </div>
+           
+            
+           
+    
+        
+    </div>
+    <script>
+        function getData(){
+        let country_name=country_nme.value
+        fetch(`https://restcountries.com/v2/name/${country_name}?fullText=true`).then(res=>res.json()).
+        then(data=>displayValue(data))
+        }
+
+        function displayValue(country_data)
+        {
+            
+            let country_name=country_data[0].name
+            let capital=country_data[0].capital
+            let population=country_data[0].population
+            let currency=country_data[0].currencies[0].name
+            let currency_symbol=country_data[0].currencies[0].symbol
+            let flag=country_data[0].flag
+            let html_value =`
+            <div class="card" style="width: 18rem;">
+                <img src="${flag}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${country_name}</h5>
+   
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">${capital}</li>
+                    <li class="list-group-item">${population}</li>
+                     <li class="list-group-item">${currency}</li>
+                    <li class="list-group-item">${currency_symbol}</li>
+    
+                </ul>
+  
+            </div>`
+            
+            document.querySelector("#result").innerHTML=html_value
+            
+        }
+    </script>
+
+    
+</body>
+</html>
